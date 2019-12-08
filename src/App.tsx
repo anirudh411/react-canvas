@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
 import './App.css';
-import {Circle} from "./shapes/Circle";
+import Circle from "./shapes/Circle/index";
 
 interface CanvasConfig {
     id?: string,
@@ -23,6 +23,7 @@ const canvasContextConfig: CanvasConfig = {
     stroke: COLORS.DARK_GRAY,
     width: 400,
     height: 400,
+
 };
 
 
@@ -58,7 +59,7 @@ const App: React.FC = () => {
         <Canvas>
             <Circle fill={COLORS.DARK_GRAY}>
                 <Circle x={30} y={20} fill={COLORS.LIGHT_PINK} radius={20}>
-                    <Circle x={30} y={20} fill={COLORS.PRIMARY_BLUE} radius={20}/>
+                    <Circle x={10} y={20} fill={COLORS.PRIMARY_BLUE} radius={10}/>
                 </Circle>
             </Circle>
 

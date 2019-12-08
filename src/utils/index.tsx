@@ -4,6 +4,8 @@ export const getCanvasElement = (id: string): HTMLCanvasElement => document.getE
 /*Get DOMRect object of the element*/
 export const getElementBoundCoordinateObject = (element: HTMLCanvasElement | HTMLElement): DOMRect => element.getBoundingClientRect();
 
+export const getRelativeCoordinates = (x: number, y: number, parentX: number, parentY: number) => [parentX + x, parentY + y];
+
 export const computeShapePositionBasedOnParent = (x: number, y: number, element: HTMLCanvasElement, position: 'center'): number[] => {
 
     const parentCoordinates = getElementBoundCoordinateObject(element);

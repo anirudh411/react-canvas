@@ -30,7 +30,11 @@ const shapeConfig = {
     ...canvasConfig,
     position: 'center',
     radius: 50,
-    stroke:'#000',
+    stroke: '#000',
+    x: 0,
+    y: 0,
+    prevX: 0,
+    prevY: 0
 
 };
 
