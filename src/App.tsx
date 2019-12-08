@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import './App.css';
 import {Circle} from "./shapes/Circle";
 
@@ -29,54 +29,39 @@ const canvasContextConfig: CanvasConfig = {
 export const CanvasContext = React.createContext(canvasContextConfig);
 
 
-const Canvas = (props: any) => {
+const Canvas: any = (props: any) => {
+
     const {fill, stroke, height, width, children} = props;
     return (
         <CanvasContext.Provider value={canvasContextConfig}>
-            <canvas id={`1`} width={width || 400} height={height || 400}/>
+            <canvas id={`1`} width={width} height={height}/>
             {children}
         </CanvasContext.Provider>)
 };
+Canvas.defaultProps = {
+    ...canvasContextConfig
+}
 
 const App: React.FC = () => {
-    // const [radius, updateR] = useState(10);
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         updateR((r) => changeRadius(r));
-    //     }, 10);
-    //     return () => clearInterval(interval);
-    // }, []);
-    // const changeRadius = (r: any) => {
-    //     if (r <= 100) return ++r;
-    //     return r;
-    // };
+    const [radius, updateR] = useState(10);
+    /*  useEffect(() => {
+          const interval = setInterval(() => {
+              updateR((r) => changeRadius(r));
+          }, 10);
+          return () => clearInterval(interval);
+      }, []);
+      const changeRadius = (r: any) => {
+          if (r <= 200) return ++r;
+          return r;
+      };*/
     return (
-        <Canvas width={800} height={800}>
-            <Circle value={{position: 'left'}} x={100} y={10} radius={200} position={'center'}
-                    fill={COLORS.LIGHT_PINK}>
-
-                {/* EYES start*/}
-                <Circle value={{position: 'left'}} x={0} y={-50} radius={20} position={'center'}
-                        fill={COLORS.DARK_GRAY}>
-                    <Circle value={{position: 'left'}} x={0} y={-50} radius={5} position={'center'}
-                            fill={COLORS.WHITE}/>
+        <Canvas>
+            <Circle fill={COLORS.DARK_GRAY}>
+                <Circle x={10} y={20} fill={COLORS.LIGHT_PINK} radius={20}>
+                    <Circle x={10} y={20} fill={COLORS.PRIMARY_BLUE} radius={10}/>
                 </Circle>
-
-                <Circle value={{position: 'left'}} x={200} y={-50} radius={20}
-                        position={'center'}
-                        fill={COLORS.DARK_GRAY}>
-                    <Circle value={{position: 'left'}} x={200} y={-50} radius={5}
-                            position={'center'}
-                            fill={COLORS.WHITE}/>
-                </Circle>
-                {/* EYES end*/}
-
-
-                <Circle value={{position: 'left'}} x={100} y={80} radius={50}
-                        position={'center'}
-                        fill={COLORS.DARK_GRAY}/>
-
             </Circle>
+
         </Canvas>
     )
 };

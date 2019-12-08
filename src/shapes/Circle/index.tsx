@@ -1,17 +1,24 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {CanvasContext, ShapeContext} from "../../Contexts";
 import {computeShapePositionBasedOnParent, getCanvasElement} from "../../utils";
+import {COLORS} from "../../App";
 
 export const Circle = (props: any) => {
-    let {height, id, width, fill, stroke} = useContext(CanvasContext);
-    let {radius, position, x, y, children, value} = props;
+    let shapeConfigContext = useContext(ShapeContext);
+    const getShapeConfig = (args = {}): any => {
+        return {
+            ...shapeConfigContext,
+            ...props,
+            ...args
+        }
+    };
+    let {id, stroke, radius, position, x, y} = getShapeConfig();
+    let fill = COLORS.WHITE;
     if (props.fill) {
         fill = props.fill;
     }
-    console.log(props, id);
 
     useEffect(() => {
-
         if (id) {
             const canvas = getCanvasElement(id);
             const [_x, _y] = computeShapePositionBasedOnParent(x, y, canvas, position);
@@ -28,8 +35,10 @@ export const Circle = (props: any) => {
                 }
             }
         }
+
     });
-    return <ShapeContext.Provider value={props}>
+    return <ShapeContext.Provider value={{...getShapeConfig()}}>
         {props.children}
     </ShapeContext.Provider>
+
 };

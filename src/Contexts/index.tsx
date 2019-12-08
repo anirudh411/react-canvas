@@ -28,6 +28,9 @@ const canvasConfig = {
 
 const shapeConfig = {
     ...canvasConfig,
+    position: 'center',
+    radius: 50,
+    stroke:'#000',
 
 };
 

@@ -7,10 +7,15 @@ export const getElementBoundCoordinateObject = (element: HTMLCanvasElement | HTM
 export const computeShapePositionBasedOnParent = (x: number, y: number, element: HTMLCanvasElement, position: 'center'): number[] => {
 
     const parentCoordinates = getElementBoundCoordinateObject(element);
-
+    const parentX = Math.ceil(parentCoordinates.x);
+    const parentY = Math.ceil(parentCoordinates.y);
+    let _x = 0, _y = 0;
+    if (!(x && y)) {
+        _x = Math.ceil(parentX + (parentCoordinates.width / 2));
+        _y = Math.ceil(parentY + (parentCoordinates.height / 2));
+        return [_x, _y];
+    }
     if (position === 'center') {
-        const parentX = Math.ceil(parentCoordinates.x);
-        const parentY = Math.ceil(parentCoordinates.y);
         return [Math.ceil(parentX + (parentCoordinates.width / 2)) + x, Math.ceil(parentY + (parentCoordinates.height / 2) + y)];
     }
 
