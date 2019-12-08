@@ -57,8 +57,8 @@ const App: React.FC = () => {
     return (
         <Canvas>
             <Circle fill={COLORS.DARK_GRAY}>
-                <Circle x={10} y={20} fill={COLORS.LIGHT_PINK} radius={20}>
-                    <Circle x={10} y={20} fill={COLORS.PRIMARY_BLUE} radius={10}/>
+                <Circle x={30} y={20} fill={COLORS.LIGHT_PINK} radius={20}>
+                    <Circle x={30} y={20} fill={COLORS.PRIMARY_BLUE} radius={20}/>
                 </Circle>
             </Circle>
 
