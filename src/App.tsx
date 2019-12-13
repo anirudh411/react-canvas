@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
 import './App.css';
 import Circle from "./shapes/Circle/index";
 
@@ -31,13 +31,12 @@ export const CanvasContext = React.createContext(canvasContextConfig);
 
 
 const Canvas: any = (props: any) => {
-
-    const {fill, stroke, height, width, children} = props;
+    const {children, ...rest} = props;
     return (
-        <CanvasContext.Provider value={canvasContextConfig}>
-            <canvas id={`1`} width={width} height={height}/>
-            {children}
-        </CanvasContext.Provider>)
+        <div>
+            <canvas id={`1`} width={rest.width} height={rest.height}/>
+            {React.cloneElement(children, rest)}
+        </div>)
 };
 Canvas.defaultProps = {
     ...canvasContextConfig
@@ -45,24 +44,12 @@ Canvas.defaultProps = {
 
 const App: React.FC = () => {
     const [radius, updateR] = useState(10);
-    /*  useEffect(() => {
-          const interval = setInterval(() => {
-              updateR((r) => changeRadius(r));
-          }, 10);
-          return () => clearInterval(interval);
-      }, []);
-      const changeRadius = (r: any) => {
-          if (r <= 200) return ++r;
-          return r;
-      };*/
-    return (
-        <Canvas>
-            <Circle fill={COLORS.DARK_GRAY}>
-                <Circle x={30} y={20} fill={COLORS.LIGHT_PINK} radius={20}>
-                    <Circle x={10} y={20} fill={COLORS.PRIMARY_BLUE} radius={10}/>
-                </Circle>
-            </Circle>
 
+    return (
+        <Canvas fill={COLORS.PRIMARY_BLUE}>
+            <Circle x={200} y={200} radius={120} fill={COLORS.DARK_GRAY}>
+                <Circle radius={100} fill={COLORS.LIGHT_PINK} x={200} y={200}></Circle>
+            </Circle>
         </Canvas>
     )
 };
