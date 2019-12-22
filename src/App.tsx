@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
+import React from 'react';
 import './App.css';
 import Circle from "./shapes/Circle/index";
 
@@ -27,9 +27,6 @@ const canvasContextConfig: CanvasConfig = {
 };
 
 
-export const CanvasContext = React.createContext(canvasContextConfig);
-
-
 const Canvas: any = (props: any) => {
     const {children, ...rest} = props;
     return (
@@ -40,15 +37,16 @@ const Canvas: any = (props: any) => {
 };
 Canvas.defaultProps = {
     ...canvasContextConfig
-}
+};
 
 const App: React.FC = () => {
-    const [radius, updateR] = useState(10);
 
     return (
         <Canvas fill={COLORS.PRIMARY_BLUE}>
             <Circle x={200} y={200} radius={120} fill={COLORS.DARK_GRAY}>
-                <Circle radius={100} fill={COLORS.LIGHT_PINK} x={200} y={200}></Circle>
+                <Circle x={10} y={0} radius={20} fill={COLORS.LIGHT_PINK}>
+                    <Circle x={0} y={0} radius={10} fill={COLORS.PRIMARY_BLUE}/>
+                </Circle>
             </Circle>
         </Canvas>
     )

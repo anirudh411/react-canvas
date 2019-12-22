@@ -1,47 +1,45 @@
-import React, {cloneElement, Component, useContext, useEffect, useLayoutEffect, useState} from "react";
-import {CanvasContext, ShapeContext} from "../../Contexts";
-import {computeShapePositionBasedOnParent, getCanvasElement, getRelativeCoordinates} from "../../utils";
-import {COLORS} from "../../App";
+import React, {cloneElement, Component} from "react";
+import {computeShapePositionBasedOnParent, getCanvasElement} from "../../utils";
 
-const Circle = (props) => {
-	const {children, ...rest} = props;
-	if (props.x && props.y) {
+class Circle extends Component {
+	constructor(props) {
+		super(props);
 	}
-	let [computedX, updateComputedX] = useState(props.x || 0);
-	let [computedY, updateComputedY] = useState(props.y || 0);
-	useLayoutEffect(() => {
-		if (rest.id) {
-			const canvas = getCanvasElement(rest.id);
+
+	componentDidMount() {
+		if (this.props.id) {
+			const canvas = getCanvasElement(this.props.id);
 			const ctx = canvas.getContext('2d');
-			const [_x, _y] = computeShapePositionBasedOnParent(rest.x, rest.y, canvas, 'center');
-			updateComputedX(_x);
-			updateComputedY(_y);
+			const [x, y] = computeShapePositionBasedOnParent(this.props.x, this.props.y, this.props.parentX, this.props.parentY, 'center');
+
 			if (ctx) {
-				if (rest.fill) {
+				if (this.props.fill) {
 					ctx.globalCompositeOperation = 'destination-over';
 					ctx.beginPath();
-					ctx.arc(rest.x, rest.y, rest.radius || 10, 0, 2 * Math.PI);
-					ctx.fillStyle = rest.fill;
+					ctx.arc(x, y, this.props.radius || 20, 0, 2 * Math.PI);
+					ctx.fillStyle = this.props.fill;
 					ctx.fill();
-					ctx.strokeStyle = rest.stroke;
+					ctx.strokeStyle = '#ff0f22';
 					ctx.stroke();
 				}
 			}
 		}
-	}, [computedX, computedY]);
-	const newProps = () => {
-		return {
-			...rest,
-			...children,
-			parentX: rest.x,
-			parentY: rest.y
-		}
 	}
-	if (children)
-		return React.cloneElement(children, {...newProps()});
-	else return null;
 
-};
+	render() {
+		const {children, ...rest} = this.props;
+
+		const [x, y] = computeShapePositionBasedOnParent(this.props.x, this.props.y, this.props.parentX, this.props.parentY, 'center');
+		// noinspection JSCheckFunctionSignatures
+		return this.props.children ? cloneElement(children, {
+			...rest,
+			...children.props,
+			parentX: x,
+			parentY: y
+		}) : null;
+	}
+}
+
 export default Circle;
 
 
