@@ -1,12 +1,12 @@
 /*Returns a HTMLCanvasElement*/
-export const getCanvasElement = (id: string): HTMLCanvasElement => document.getElementById(id) as HTMLCanvasElement;
+const getCanvasElement = (id: string): HTMLCanvasElement => document.getElementById(id) as HTMLCanvasElement;
 
 /*Get DOMRect object of the element*/
-export const getElementBoundCoordinateObject = (element: HTMLCanvasElement | HTMLElement): DOMRect => element.getBoundingClientRect();
+const getElementBoundCoordinateObject = (element: HTMLCanvasElement | HTMLElement): DOMRect => element.getBoundingClientRect();
 
-export const getRelativeCoordinates = (x: number, y: number, parentX: number, parentY: number) => [parentX + x, parentY + y];
+const getRelativeCoordinates = (x: number, y: number, parentX: number, parentY: number) => [parentX + x, parentY + y];
 
-export const computeShapePositionBasedOnParent = (x: number, y: number, parentX: number = 0, parentY: number = 0, position: 'center'): number[] => {
+const computeShapePositionBasedOnParent = (x: number, y: number, parentX: number = 0, parentY: number = 0, position: 'center'): number[] => {
     //console.log(x, y, parentX, parentY);
     // const parentCoordinates = getElementBoundCoordinateObject(element);
     //const parentX = Math.ceil(parentCoordinates.x);
@@ -25,3 +25,27 @@ export const computeShapePositionBasedOnParent = (x: number, y: number, parentX:
 };
 
 
+const createShape = (shapeType: string, ctx: any, config: any) => {
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.beginPath();
+    switch (shapeType) {
+        case 'circle':
+            ctx.arc(config.x, config.y, config.radius || 20, 0, 2 * Math.PI);
+            ctx.fillStyle = config.fill;
+            ctx.fill();
+            ctx.strokeStyle = '#ff0f22';
+            ctx.stroke();
+            break;
+        case 'rect':
+            ctx.fillRect(config.x1, config.y1, config.x2, config.y2);
+        default:
+    }
+    ctx.fillStyle = config.fill;
+};
+export {
+    createShape,
+    computeShapePositionBasedOnParent,
+    getRelativeCoordinates,
+    getCanvasElement,
+    getElementBoundCoordinateObject
+}

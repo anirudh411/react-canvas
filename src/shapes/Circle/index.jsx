@@ -1,5 +1,5 @@
-import React, {cloneElement, Component} from "react";
-import {computeShapePositionBasedOnParent, getCanvasElement} from "../../utils";
+import React, {Children, cloneElement, Component} from "react";
+import {computeShapePositionBasedOnParent, createShape, getCanvasElement} from "../../utils";
 
 class Circle extends Component {
 	constructor(props) {
@@ -11,16 +11,14 @@ class Circle extends Component {
 			const canvas = getCanvasElement(this.props.id);
 			const ctx = canvas.getContext('2d');
 			const [x, y] = computeShapePositionBasedOnParent(this.props.x, this.props.y, this.props.parentX, this.props.parentY, 'center');
-
 			if (ctx) {
 				if (this.props.fill) {
-					ctx.globalCompositeOperation = 'destination-over';
-					ctx.beginPath();
-					ctx.arc(x, y, this.props.radius || 20, 0, 2 * Math.PI);
-					ctx.fillStyle = this.props.fill;
-					ctx.fill();
-					ctx.strokeStyle = '#ff0f22';
-					ctx.stroke();
+					createShape('circle', ctx, {
+						radius: this.props.radius,
+						fill: this.props.fill,
+						x,
+						y
+					});
 				}
 			}
 		}
@@ -31,12 +29,12 @@ class Circle extends Component {
 
 		const [x, y] = computeShapePositionBasedOnParent(this.props.x, this.props.y, this.props.parentX, this.props.parentY, 'center');
 		// noinspection JSCheckFunctionSignatures
-		return this.props.children ? cloneElement(children, {
+		return this.props.children ? Children.map(children, (c) => cloneElement(c, {
 			...rest,
-			...children.props,
+			...c.props,
 			parentX: x,
 			parentY: y
-		}) : null;
+		})) : null;
 	}
 }
 
