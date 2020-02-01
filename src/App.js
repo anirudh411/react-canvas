@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Circle from "./shapes/Circle/index";
 import Shape from "./shapes/Circle/index";
+import {CanvasContext} from "./Contexts";
 
 
 export const COLORS = {
@@ -20,14 +20,13 @@ const canvasContextConfig = {
 
 };
 
-
 const Canvas = (props) => {
 	const {children, ...rest} = props;
 	return (
-		<div>
-			<canvas id={`1`} width={rest.width} height={rest.height}/>
+		<CanvasContext.Provider value={"1"}>
+			<canvas id={"1"} width={rest.width} height={rest.height}/>
 			{React.cloneElement(children, rest)}
-		</div>)
+		</CanvasContext.Provider>)
 };
 Canvas.defaultProps = {
 	...canvasContextConfig

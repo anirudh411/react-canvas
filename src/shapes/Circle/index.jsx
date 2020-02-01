@@ -1,23 +1,18 @@
 import React, {Children, cloneElement, Component, useEffect} from "react";
-import {computeShapePositionBasedOnParent, renderShape, getCanvasElement} from "../../utils";
+import {computeShapePositionBasedOnParent, getCanvasElement, renderShape} from "../../utils";
+import {CanvasContext} from "../../Contexts";
 
 
 function Shape({type = "circle", children, ...props}) {
+	const canvasConfig = React.useContext(CanvasContext);
 	useEffect(() => {
-		if (props.id) {
-			const canvas = getCanvasElement(props.id);
-			const ctx = canvas.getContext('2d');
-			const [x, y] = computeShapePositionBasedOnParent(props.x, props.y, props.parentX, props.parentY, 'center');
-			if (ctx) {
-				renderShape('circle', ctx, {
-					radius: props.radius,
-					fill: props.fill,
-					x,
-					y
-				});
-			}
-		}
-
+		renderShape(type, canvasConfig, {
+			radius: props.radius,
+			fill: props.fill,
+			x,
+			y,
+			...props
+		});
 	});
 
 
@@ -29,7 +24,7 @@ function Shape({type = "circle", children, ...props}) {
 		parentX: x,
 		parentY: y
 	})) : null;
-};
+}
 
 
 /**/
