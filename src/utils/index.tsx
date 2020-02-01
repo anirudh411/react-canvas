@@ -25,25 +25,28 @@ const computeShapePositionBasedOnParent = (x: number, y: number, parentX: number
 };
 
 
-const createShape = (shapeType: string, ctx: any, config: any) => {
+const renderShape = (shapeType: string, ctx: any, config: any) => {
     ctx.globalCompositeOperation = 'destination-over';
+    const [x, y] = computeShapePositionBasedOnParent(config.x, config.y, config.parentX, config.parentY, 'center');
+
     ctx.beginPath();
     switch (shapeType) {
         case 'circle':
-            ctx.arc(config.x, config.y, config.radius || 20, 0, 2 * Math.PI);
+            ctx.arc(x, y, config.radius || 20, 0, 2 * Math.PI);
             ctx.fillStyle = config.fill;
             ctx.fill();
             ctx.strokeStyle = '#ff0f22';
             ctx.stroke();
             break;
         case 'rect':
-            ctx.fillRect(config.x1, config.y1, config.x2, config.y2);
+            ctx.fillStyle = config.fill;
+            ctx.strokeStyle = '#ff0f22';
+            ctx.fillRect(x, y, config.radius, config.radius);
         default:
     }
-    ctx.fillStyle = config.fill;
 };
 export {
-    createShape,
+    renderShape,
     computeShapePositionBasedOnParent,
     getRelativeCoordinates,
     getCanvasElement,
