@@ -19,12 +19,12 @@ const canvasContextConfig = {
 	height: 400,
 
 };
-
 const Canvas = (props) => {
 	const {children, ...rest} = props;
+	console.log(rest);
 	return (
-		<CanvasContext.Provider value={"1"}>
-			<canvas id={"1"} width={rest.width} height={rest.height}/>
+		<CanvasContext.Provider value={rest}>
+			<canvas id={rest.id} width={rest.width} height={rest.height}/>
 			{React.cloneElement(children, rest)}
 		</CanvasContext.Provider>)
 };
@@ -33,11 +33,12 @@ Canvas.defaultProps = {
 };
 
 const App = () => {
-
 	return (
 		<Canvas fill={COLORS.PRIMARY_BLUE}>
-			<Shape type={"rect"} x={200} y={200} radius={120} fill={COLORS.DARK_GRAY}>
-				<Shape x={10} y={0} radius={60} fill={COLORS.LIGHT_PINK}/>
+			<Shape type={"rect"} x={0} y={100} radius={120} fill={COLORS.DARK_GRAY}>
+				<Shape x={10} y={0} radius={60} fill={COLORS.LIGHT_PINK}>
+					<Shape type={"rect"} x={0} y={0} radius={20} fill={COLORS.LIGHT_PINK}/>
+				</Shape>
 			</Shape>
 		</Canvas>
 	)

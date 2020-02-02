@@ -21,7 +21,7 @@ const computeShapePositionBasedOnParent = (x: number, y: number, parentX: number
 
 
 const renderShape = (shapeType: string, canvasConfig: any, config: any) => {
-    const canvas = getCanvasElement(canvasConfig);
+    const canvas = getCanvasElement(canvasConfig.id);
     const ctx = canvas.getContext('2d');
     if (ctx) {
         ctx.globalCompositeOperation = 'destination-over';
